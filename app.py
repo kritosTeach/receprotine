@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash
 app = Flask(__name__, static_folder='.', static_url_path='')
 
 # Config - Railway ready
-ADMIN_PASSWORD = 'admin123'  # Change in production!
+ADMIN_PASSWORD = 'kritos2003'  # Matches admin.html JS
 DB_PATH = os.environ.get('DATABASE_URL', 'recipes.db')
 RECIPES_DIR = 'static/recipes'
 os.makedirs(RECIPES_DIR, exist_ok=True)
