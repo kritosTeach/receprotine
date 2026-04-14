@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECEPROTINE - Authentic Moroccan Recipes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fffaf5;
+            color: #2d2a24;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #c25b1a;
+        }
+        .logo i {
+            color: #e67e22;
+            margin-right: 8px;
+        }
+        nav a {
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            color: #5a3e2b;
+        }
+        nav a:hover { color: #e67e22; }
+        .hero {
+            background: linear-gradient(120deg, #ffe6d5, #ffd9c2);
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            color: #9b4b1a;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: 20px auto;
+        }
+        .btn {
+            background: #e67e22;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e67e22;
+            color: #e67e22;
+            margin-right: 15px;
+        }
+        .ad-spot {
+            background: #f2ebe4;
+            border-radius: 20px;
+            margin: 30px auto;
+            text-align: center;
+            padding: 15px;
+            border: 1px dashed #b98f6e;
+        }
+        .ad-label {
+            font-size: 0.7rem;
+            color: #a07453;
+            margin-bottom: 8px;
+        }
+        .two-columns {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin: 50px 0;
+        }
+        .recipes-area {
+            flex: 3;
+        }
+        .sidebar {
+            flex: 1;
+        }
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .recipe-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+        .recipe-card:hover { transform: translateY(-5px); }
+        .card-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .time-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-body h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: #b3540c;
+        }
+        .admin-buttons {
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+        }
+        .admin-buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #a16237;
+        }
+        .form-card {
+            background: #fff7ef;
+            border-radius: 32px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+input, textarea, .file-upload-wrapper {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1px solid #e2cbb4;
+            margin-bottom: 15px;
+            font-family: inherit;
+            background: white;
+        }
+        .file-upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .image-preview {
+            width: 100%;
+            max-height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-top: 10px;
+            display: none;
+        }
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 40px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        footer {
+            background: #2c241e;
+            color: #f0dbca;
+            text-align: center;
+            padding: 30px;
+            border-radius: 40px 40px 0 0;
+            margin-top: 60px;
+        }
+        /* Detail page styles */
+        .recipe-detail-container {
+            background: white;
+            border-radius: 32px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .detail-header h2 {
+            font-size: 2.2rem;
+            color: #9b4b1a;
+            margin-left: 20px;
+        }
+        .detail-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 24px;
+            margin-bottom: 25px;
+        }
+        .detail-meta {
+            display: flex;
+            gap: 20px;
+            color: #7a5a3e;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .detail-instructions {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            white-space: pre-line;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: #e67e22;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        @media (max-width: 800px) {
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-flex">
+        <div class="logo"><i class="fas fa-utensils"></i> RECEPROTINE </div>
+            <nav>
+            <a href="/" id="homeLink">Recipes</a>
+            <a href="/admin"><i class="fas fa-lock"></i> Admin</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Main content: list view (default) -->
+<div id="listView">
+    <section class="hero">
+        <div class="container">
+            <h1>RECEPROTINE for Recipes</h1>
+  
+            <a href="#" id="exploreBtn" class="btn">Explore Recipes ↓</a>
+        </div>
+    </section>
+
+    <!-- ADSTERRA ZONE 1 - Leaderboard (placeholder) -->
+    <div class="container ad-spot">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-placeholder" style="background:#e3d5c8; padding:12px; border-radius:16px;">
+             <script>
+  atOptions = {
+    'key' : '6c485f751d1e4ae5294f32db875f12bc',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+  };
+</script>
+<script src="https://ballisticcomainvitation.com/6c485f751d1e4ae5294f32db875f12bc/invoke.js"></script>
+
+        </div>
+    </div>
+
+    <div class="container two-columns">
+        <div class="recipes-area" id="recipes">
+            <h2 style="font-size: 2rem;">🍲 Featured Recipes (Auto-updating)</h2>
+            <div class="recipes-grid" id="recipesGrid"></div>
+        </div>
+
+        <aside class="sidebar">
+            <!-- ADSTERRA ZONE 2 - Sidebar (actual Adsterra code integrated) -->
+            <div class="ad-spot">
+                <div class="ad-label">Sponsored</div>
+                <!-- Adsterra script and container -->
+                <script>
+  atOptions = {
+    'key' : 'c5289db4304135e72d0bf18187a442e3',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://ballisticcomainvitation.com/c5289db4304135e72d0bf18187a442e3/invoke.js"></script>
+
+            </div>
+
+            </aside>
+    </div>
+</div>
+
+<!-- Detail view removed - use dedicated pages -->
+
+<footer>
+    <p><i class="fas fa-heart" style="color:#e67e22;"></i> Grandma's Table — Real recipes, real taste</p>
+    <p style="font-size:0.8rem;">Monetized with Adsterra — thank you for supporting free content</p>
+</footer>
+
+<script>
+    let recipes = [];
+
+    // UI elements
+    const recipesGrid = document.getElementById('recipesGrid');
+    const homeLink = document.getElementById('homeLink');
+    const exploreBtn = document.getElementById('exploreBtn');
+
+
+
+
+
+    async function loadRecipes() {
+        try {
+            const response = await fetch(`/api/recipes?_t=${Date.now()}`);
+            recipes = await response.json();
+        } catch (e) {
+            console.error('Failed to load recipes:', e);
+            recipes = [];
+        }
+        displayRecipes();
+    }
+
+    function displayRecipes() {
+        if (!recipesGrid) return;
+        if (recipes.length === 0) {
+            recipesGrid.innerHTML = `<div style="text-align:center; padding:40px;">No recipes yet. <a href="/admin">Admin can add some</a>!</div>`;
+            return;
+        }
+        let html = "";
+        recipes.forEach(recipe => {
+            const imgSrc = recipe.image_data || recipe.imageData || 'https://via.placeholder.com/400x250?text=Moroccan+Dish';
+            html += `
+                <div class="recipe-card" data-id="${recipe.id}">
+                    <div class="card-img" style="background-image: url('${imgSrc}');">
+                        <span class="time-badge"><i class="far fa-clock"></i> ${recipe.prep_time || recipe.prepTime}</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>${escapeHtml(recipe.title)}</h3>
+                        <p>${escapeHtml(recipe.short_desc || recipe.shortDesc)}</p>
+                        <a href="/recipe/${recipe.id}" class="btn" style="width:100%; text-align:center; margin-top:10px;">View full recipe →</a>
+                    </div>
+                </div>
+            `;
+        });
+        recipesGrid.innerHTML = html;
+    }
+
+    // Hash-based routing
+    function handleHashChange() {
+        const hash = window.location.hash.substring(1);
+        if (hash.startsWith('recipe/')) {
+            const id = hash.split('/')[1];
+            showRecipeDetail(id);
+        } else {
+            showListView();
+        }
+    }
+
+    function navigateToRecipe(id) {
+        window.location.hash = `recipe/${id}`;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // New function: show detail page
+    function showRecipeDetail(id) {
+        const recipe = recipes.find(r => r.id === id);
+        if (!recipe) return;
+
+        // Build detail HTML
+        const detailHtml = `
+            <div class="detail-header">
+                <i class="fas fa-utensils" style="font-size:2.5rem; color:#e67e22;"></i>
+                <h2>${escapeHtml(recipe.title)}</h2>
+            </div>
+            <img class="detail-img" src="${recipe.imageUrl || 'https://via.placeholder.com/800x400?text=' + encodeURIComponent(recipe.title)}" alt="${escapeHtml(recipe.title)}">
+            <div class="detail-meta">
+                <span><i class="far fa-clock"></i> Prep time: ${escapeHtml(recipe.prepTime)}</span>
+                <span><i class="fas fa-tag"></i> ${escapeHtml(recipe.shortDesc)}</span>
+            </div>
+            <div class="detail-instructions">
+                <h3 style="margin-bottom:15px; color:#b3540c;">📝 Instructions</h3>
+                <p>${escapeHtml(recipe.fullRecipe).replace(/\n/g, '<br>')}</p>
+            </div>
+            ${isAdmin ? `<div style="margin-top:30px;"><button id="deleteFromDetail" data-id="${recipe.id}" style="background:#c25b1a; color:white; border:none; padding:8px 20px; border-radius:30px;"><i class="fas fa-trash"></i> Delete this recipe</button></div>` : ''}
+        `;
+        detailContent.innerHTML = detailHtml;
+
+        // Add delete listener if admin
+        if (isAdmin) {
+            const delBtn = document.getElementById('deleteFromDetail');
+            if (delBtn) {
+                delBtn.addEventListener('click', () => {
+                    const id = delBtn.getAttribute('data-id');
+                    deleteRecipe(id);
+                    // After delete, go back to list view
+                    showListView();
+                });
+            }
+        }
+
+        // Hide list, show detail
+        listView.classList.add('hidden');
+        detailView.classList.remove('hidden');
+        window.scrollTo(0, 0);
+    }
+
+    // Clean - no detail view or local admin needed
+
+// SSE auto-refresh
+let eventSource;
+function connectSSE() {
+    if (eventSource) eventSource.close();
+    eventSource = new EventSource('/sse');
+    eventSource.onmessage = function(e) {
+        loadRecipes();
+    };
+}
+
+// Initial load + SSE
+loadRecipes();
+connectSSE();
+
+// Event listeners
+homeLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('#recipes').scrollIntoView({ behavior: 'smooth' });
+});
+
+exploreBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('#recipes').scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
